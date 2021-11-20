@@ -1,0 +1,82 @@
+@keyframes disappear {
+
+  0%{
+    opacity: 1;
+    height: 40px;
+  }
+  60%{
+    opacity : .4;
+    height : 40px;
+    }
+  100%{
+    opacity: 0;
+    height: 0px;
+    }
+  }
+
+@keyframes appear {
+  80% {
+    opacity : 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes appear-down{
+  from {
+    height : 0cm;
+    opacity : 0;
+  }
+  to {
+    height: 100px;
+    opacity: 1;
+  }
+}
+
+#new_post{
+  animation-name: disappear;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  height : 40px;
+  margin : 10px;
+}
+
+#post{
+  position: relative;
+  animation-name: appear;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+  opacity :0;
+  margin:10px;
+}
+
+#new_post_text{
+  position: relative;
+  animation-name: appear-down;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+  width : 98.5%;
+  height : 100px;
+  resize: none;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-style : solid;
+  border-width: 1px;
+  border-color: grey;
+  border-radius: 5px;
+}
+
+.all_post{
+  border-style : solid;
+  border-width: 1px;
+  border-radius: 5px;
+  padding: 20px;
+  margin : 10px;
+}
+
+.user{
+  margin-bottom: -5px;
+  font-weight: bold;
+  font-size: 20px;
+}

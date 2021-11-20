@@ -3,12 +3,21 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-
-from .models import User
+from django.utils import timezone
+from .models import *
 
 
 def index(request):
-    return render(request, "network/index.html")
+    if request.method == "POST":
+        user = User.objects.get(pk=request.user.id)
+        post = request.POST.get("new_post_text")
+        new_post = Post.objects.create(user=user,post=post)
+        new_post.save()
+        HttpResponseRedirect(reverse("index"))
+    posts = reversed(Post.objects.all())
+    return render(request, "network/index.html" , {
+    "all_post" : posts,
+    })
 
 
 def login_view(request):

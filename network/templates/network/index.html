@@ -1,5 +1,26 @@
 {% extends "network/layout.html" %}
+{%load static%}
 
 {% block body %}
-    TODO
+{% if user.is_authenticated%}
+<form method = "post" id= "new_post_form">
+  {% csrf_token %}
+<div id="new" >
+    <input type="submit" id="new_post" class="btn btn-primary" value="Add New Post">
+</div>
+</form>
+  {% for post in all_post%}
+  <div class="all_post">
+  <h5 class="user">{{post.user}}</h5><br>
+  {{post.post}}
+  </div>
+  {%endfor%}
+
+{% endif %}
+{% endblock %}
+
+
+
+{% block script %}
+    <script src="{% static 'network/index.js' %}"></script>
 {% endblock %}

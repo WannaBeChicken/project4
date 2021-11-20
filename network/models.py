@@ -4,3 +4,8 @@ from django.db import models
 
 class User(AbstractUser):
     pass
+
+class Post(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    post = models.CharField(max_length=200)
+    
