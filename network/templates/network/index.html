@@ -3,20 +3,32 @@
 
 {% block body %}
 {% if user.is_authenticated%}
-<form method = "post" id= "new_post_form">
-  {% csrf_token %}
-<div id="new" >
-    <input type="submit" id="new_post" class="btn btn-primary" value="Add New Post">
+<div id="add_new_post">
+  <input type="submit" id="new_post" class="btn btn-primary" value="Add New Post" onsubmit = "event.preventDefault()">
 </div>
-</form>
+<div id="new_post_view">
+  <form method = "post" id= "new_post_form">
+    {% csrf_token %}
+    <div id="post_view" >
+      <textarea id="new_post_text" rows="3" cols="100" name = "new_post_text"></textarea><br>
+      <button id="post" class="btn btn-primary" name = "post">Post</button>
+    </div>
+  </form>
+  <div id="cancel_view">
+    <button id="cancel" class = "btn btn-primary">Cancel</button>
+  </div>
+</div>
   {% for post in all_post%}
   <div class="all_post">
   <h5 class="user">{{post.user}}</h5><br>
-  {{post.post}}
-  </div>
+  {{post.post}}<br>
+  <div id="timezone">{{post.timestamp}}</div><br>
+  <div class="like"><a href='#'><i class='bi bi-heart-fill'></i></a></div>
+  <h6 class="liked">❤️</h6>
+</div>
   {%endfor%}
-
 {% endif %}
+
 {% endblock %}
 
 

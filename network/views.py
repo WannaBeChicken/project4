@@ -8,12 +8,13 @@ from .models import *
 
 
 def index(request):
-    if request.method == "POST":
-        user = User.objects.get(pk=request.user.id)
-        post = request.POST.get("new_post_text")
-        new_post = Post.objects.create(user=user,post=post)
-        new_post.save()
-        HttpResponseRedirect(reverse("index"))
+    if 'post' in request.POST:
+        if request.method == "POST":
+            user = User.objects.get(pk=request.user.id)
+            post = request.POST.get("new_post_text")
+            new_post = Post.objects.create(user=user,post=post)
+            new_post.save()
+            HttpResponseRedirect(reverse("index"))
     posts = reversed(Post.objects.all())
     return render(request, "network/index.html" , {
     "all_post" : posts,
