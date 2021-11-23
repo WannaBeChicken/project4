@@ -37,9 +37,11 @@ document.addEventListener("DOMContentLoaded" , function() {
   catch(err) {}
   document.addEventListener('click' , event =>{
     clicked = event.target;
-    event.preventDefault();
+    console.log(clicked);
+
     //console.log(clicked);
     if (clicked.className === "bi bi-heart") {
+      event.preventDefault();
       like=clicked.parentElement.parentElement;
       liked=like.nextSibling.nextSibling;
       like.style.animationPlayState = "running";
