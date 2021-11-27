@@ -1,0 +1,13 @@
+#profile_user{
+  font-size: 50px;
+  margin-left: 50px;
+  margin-top: 30px;
+}
+
+#profile_user,#profile_follow{
+  display: inline;
+}
+
+#profile_follow{
+  margin-left: 30px;  
+}

@@ -7,7 +7,12 @@ from django.utils.timezone import now
 class User(AbstractUser):
     pass
 
+
 class Post(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     post = models.CharField(max_length=200)
     timestamp = models.DateTimeField(default=now)
+
+class Followers(models.Model):
+    user=models.ForeignKey("User" , on_delete=models.CASCADE)
+    followers = models.ManyToManyField("User", related_name="following" , blank=True ,null=True)

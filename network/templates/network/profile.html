@@ -1,0 +1,18 @@
+{% extends "network/layout.html" %}
+{%load static%}
+
+{% block body %}
+
+{% if user.is_authenticated%}
+
+  <h5 id="profile_user">{{user}}</h5>
+  <a id="profile_follow" href="#">Follow</a>
+  <div id="total_followers">{{total_followers}}</div>
+  <h6 id="user_id">{{user.id}}</h6>
+  <h5 id="logged_in">{{request.user}}</h5>
+{% endif %}
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'network/profile.js' %}"></script>
+{%endblock%}

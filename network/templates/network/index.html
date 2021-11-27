@@ -20,11 +20,12 @@
 </div>
   {% for post in all_post%}
   <div class="all_post">
-  <h5 class="user">{{post.user}}</h5><br>
+  <a href="{% url 'profile' post.user.id %}"><h5 class="user">{{post.user}}</h5></a><br>
   {{post.post}}<br>
   <div id="timezone">{{post.timestamp}}</div><br>
   <div class="like"><a href='#'><i class='bi bi-heart'></i></a></div>
   <h6 class="liked">❤️</h6>
+
 </div>
   {%endfor%}
 {% endif %}

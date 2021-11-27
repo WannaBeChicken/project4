@@ -1,11 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
 from .models import *
-
+from django.core.serializers import serialize
+import json
 
 def index(request):
     if 'post' in request.POST:
@@ -19,7 +20,6 @@ def index(request):
     return render(request, "network/index.html" , {
     "all_post" : posts,
     })
-
 
 def login_view(request):
     if request.method == "POST":
@@ -63,6 +63,7 @@ def register(request):
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
+            follow = Followers.objects.create(user=user)
         except IntegrityError:
             return render(request, "network/register.html", {
                 "message": "Username already taken."
@@ -71,3 +72,27 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+def profile(request,user_id):
+    user = User.objects.get(pk=user_id)
+    followers=Followers.objects.get(user=user)
+    #print(followers)
+    if request.method == "POST" :
+        data = json.loads(request.body)
+        #print(f"here {data} ")
+        follower = User.objects.get(username=f"{data[1]}")
+        following = User.objects.get(username=f"{data[0]}")
+        follow = Followers.objects.get(user=following)
+        #print(follow)
+        follow.followers.add(follower)
+        follow.save()
+        followers = Followers.objects.get(user=user)
+        total_followers = followers.followers.all()
+        total_followers_json = serialize("json" , total_followers , fields=("username"))
+        print(total_followers_json)
+        return HttpResponse(total_followers_json , content_type="application/json")
+
+    return render(request , "network/profile.html" , {
+    "user": user,
+    "total_followers" : followers.followers.count(),
+    })
