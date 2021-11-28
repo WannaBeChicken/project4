@@ -84,8 +84,10 @@ def profile(request,user_id):
         following = User.objects.get(username=f"{data[0]}")
         follow = Followers.objects.get(user=following)
         #print(follow)
-        follow.followers.add(follower)
-        follow.save()
+        if data[2] == "follow" :
+            follow.followers.add(follower)
+        elif data[2] == "unfollow":
+            follow.followers.remove(follower)
         followers = Followers.objects.get(user=user)
         total_followers = followers.followers.all()
         total_followers_json = serialize("json" , total_followers , fields=("username"))
@@ -93,6 +95,7 @@ def profile(request,user_id):
         return HttpResponse(total_followers_json , content_type="application/json")
 
     return render(request , "network/profile.html" , {
-    "user": user,
+    "profile_user": user,
     "total_followers" : followers.followers.count(),
+    "followers" : followers.followers.all()
     })

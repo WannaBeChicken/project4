@@ -20,17 +20,19 @@ function getCookie(name) {
     }
     return decodeURIComponent(xsrfCookies[0].split('=')[1]);
   }
+
+
 function follow(user_id) {
   document.addEventListener("click" , event =>{
     clicked=event.target;
     if (clicked.id === "profile_follow") {
-    event.preventDefault();
-    console.log(clicked.id);
-    csrftoken=getCookie("csrftoken");
-    follow = document.querySelector("#profile_user").innerHTML;
-    logged_in = document.querySelector("#logged_in").innerHTML;
-    body = [follow , logged_in];
-    console.log(body);
+      event.preventDefault();
+      console.log(clicked);
+      csrftoken=getCookie("csrftoken");
+      follow = document.querySelector("#profile_user").innerHTML;
+      logged_in = document.querySelector("#logged_in").innerHTML;
+      body = [follow , logged_in, "follow"];
+      console.log(body);
 
       fetch(`/${user_id.innerHTML}`, {
         method : 'POST',
@@ -45,6 +47,35 @@ function follow(user_id) {
         document.querySelector("#total_followers").innerHTML = data.length;
         console.log(data);
       })
+      clicked.id = "profile_unfollow";
+      clicked.innerHTML = "Unfollow";
+
+    }
+    else if (clicked.id === "profile_unfollow") {
+      event.preventDefault();
+      console.log(clicked);
+      csrftoken=getCookie("csrftoken");
+      follow = document.querySelector("#profile_user").innerHTML;
+      logged_in = document.querySelector("#logged_in").innerHTML;
+      body = [follow , logged_in , "unfollow"];
+      console.log(body);
+
+      fetch(`/${user_id.innerHTML}`, {
+        method : 'POST',
+        headers : {
+          "Content-Type" : 'application/json',
+          'X-CSRFToken' : csrftoken,
+        },
+        body: JSON.stringify(body)
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.querySelector("#total_followers").innerHTML = data.length;
+        console.log(data);
+      })
+      clicked.id = "profile_follow";
+      clicked.innerHTML = "Follow";
+
     }
   })
 }

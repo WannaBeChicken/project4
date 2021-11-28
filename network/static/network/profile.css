@@ -4,10 +4,15 @@
   margin-top: 30px;
 }
 
-#profile_user,#profile_follow{
+#profile_user,#profile_follow,#total_followers{
   display: inline;
 }
 
-#profile_follow{
-  margin-left: 30px;  
+#profile_follow,#profile_unfollow{
+  margin-left: 30px;
+}
+
+#total_followers{
+  margin-left: 15px;
+  margin-right: -15px;
 }
