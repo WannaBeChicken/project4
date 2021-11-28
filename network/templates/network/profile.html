@@ -7,11 +7,13 @@
 
   <h5 id="profile_user">{{profile_user}}</h5>
   <div id="total_followers">{{total_followers}}</div>
-  {% if user in followers %}
-    <a id="profile_unfollow" href="#">Unfollow</a>
-  {% else %}
-    <a id="profile_follow" href="#">Follow</a>
-  {% endif %}
+  {% if profile_user != request.user %}
+    {% if user in followers %}
+      <a id="profile_unfollow" href="#">Unfollow</a>
+    {% else %}
+      <a id="profile_follow" href="#">Follow</a>
+    {% endif %}
+  {%endif%}
   <h6 id="user_id">{{profile_user.id}}</h6>
   <h5 id="logged_in">{{request.user}}</h5>
 {% endif %}
